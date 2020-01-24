@@ -1,4 +1,4 @@
--- Açýklam için https://saitorhan.com/gercek-ad-ve-soyadlarindan-rastgele-veri-uretmek/ adresini ziyaret ediniz.
+-- AÃ§Ã½klam iÃ§in https://saitorhan.com/gercek-ad-ve-soyadlarindan-rastgele-veri-uretmek/ adresini ziyaret ediniz.
 
 drop table if exists #Names
 
@@ -10,9 +10,9 @@ userName nvarchar(100) null,
 
 declare @n nvarchar(200)  -- ad
 declare @sn nvarchar(200) -- soyad
-declare @un nvarchar(200) -- kullanýcý adý
-declare @id int -- gerçek verinin Id deðeri
-declare @max int -- gerçek verinin satýr sayýsý
+declare @un nvarchar(200) -- kullanÃ½cÃ½ adÃ½
+declare @id int -- gerÃ§ek verinin Id deÃ°eri
+declare @max int -- gerÃ§ek verinin satÃ½r sayÃ½sÃ½
 
 select @max = COUNT(*) from Users
 
@@ -30,11 +30,11 @@ update #Names set [Surname] = TRIM([Surname])
 
 	DECLARE crs CURSOR FOR
 	
-	SELECT Id FROM Users -- Cursur de iþlenecek veriler ve listeyi select sorgusu ile çekiyoruz .
+	SELECT Id FROM Users -- Cursur de iÃ¾lenecek veriler ve listeyi select sorgusu ile Ã§ekiyoruz .
 
-	OPEN crs -- Cursor ü açýyoruz
+	OPEN crs -- Cursor Ã¼ aÃ§Ã½yoruz
 
-	FETCH NEXT FROM crs INTO @id -- Select sorgusunda gelen sütunlar sýrasýna göre deðiþkenlere atanýr Örn : @id = Id
+	FETCH NEXT FROM crs INTO @id -- Select sorgusunda gelen sÃ¼tunlar sÃ½rasÃ½na gÃ¶re deÃ°iÃ¾kenlere atanÃ½r Ã–rn : @id = Id
 
 	WHILE @@FETCH_STATUS =0
 		BEGIN
@@ -42,22 +42,22 @@ update #Names set [Surname] = TRIM([Surname])
 			select @n = [Name] from #Names order by NEWID()
 			select @sn = [Surname] from #Names where CHARINDEX(' ', [Surname]) = 0 order by NEWID()
 			set @un = lower(SUBSTRING(@n,1,1)+@sn+CONVERT(varchar, CONVERT(int, RAND()*@max+1)))
-			set @un = REPLACE(@un,'ç', 'c')
-			set @un = REPLACE(@un,'ý', 'i')
-			set @un = REPLACE(@un,'ð', 'g')
-			set @un = REPLACE(@un,'ö', 'o')
-			set @un = REPLACE(@un,'þ', 's')
-			set @un = REPLACE(@un,'ü', 'u')
+			set @un = REPLACE(@un,'Ã§', 'c')
+			set @un = REPLACE(@un,'Ã½', 'i')
+			set @un = REPLACE(@un,'Ã°', 'g')
+			set @un = REPLACE(@un,'Ã¶', 'o')
+			set @un = REPLACE(@un,'Ã¾', 's')
+			set @un = REPLACE(@un,'Ã¼', 'u')
 
 			while exists (select UserName from Users where UserName = @un)
 			begin
 				set @un = lower(  SUBSTRING(@n,1,1)+@sn+CONVERT(varchar, CONVERT(int, RAND()*@max+1)))
-				set @un = REPLACE(@un,'ç', 'c')
-				set @un = REPLACE(@un,'ý', 'i')
-				set @un = REPLACE(@un,'ð', 'g')
-				set @un = REPLACE(@un,'ö', 'o')
-				set @un = REPLACE(@un,'þ', 's')
-				set @un = REPLACE(@un,'ü', 'u')
+				set @un = REPLACE(@un,'Ã§', 'c')
+				set @un = REPLACE(@un,'Ã½', 'i')
+				set @un = REPLACE(@un,'Ã°', 'g')
+				set @un = REPLACE(@un,'Ã¶', 'o')
+				set @un = REPLACE(@un,'Ã¾', 's')
+				set @un = REPLACE(@un,'Ã¼', 'u')
 			end
 			
 			update Users set FullName = @n + ' ' + @sn, UserName = @un where Id = @id
@@ -66,9 +66,9 @@ update #Names set [Surname] = TRIM([Surname])
  
 		END
 
-	CLOSE crs -- Cursor ü kapatýyoruz.
+	CLOSE crs -- Cursor Ã¼ kapatÃ½yoruz.
 
-	DEALLOCATE crs -- Cursor ile iþimiz bittiðinde sistemden tamizlememiz için DEALLOCATE etmemiz gerekmektedir.
+	DEALLOCATE crs -- Cursor ile iÃ¾imiz bittiÃ°inde sistemden tamizlememiz iÃ§in DEALLOCATE etmemiz gerekmektedir.
 
 	update Users set Email = UserName + '@domain.com'
 
