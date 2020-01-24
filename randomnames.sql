@@ -1,4 +1,4 @@
--- Açýklam için https://saitorhan.com/gercek-ad-ve-soyadlarindan-rastgele-veri-uretmek/ adresini ziyaret ediniz.
+-- Açıklama için https://saitorhan.com/gercek-ad-ve-soyadlarindan-rastgele-veri-uretmek/ adresini ziyaret ediniz.
 
 drop table if exists #Names
 
@@ -10,9 +10,9 @@ userName nvarchar(100) null,
 
 declare @n nvarchar(200)  -- ad
 declare @sn nvarchar(200) -- soyad
-declare @un nvarchar(200) -- kullanýcý adý
-declare @id int -- gerçek verinin Id deðeri
-declare @max int -- gerçek verinin satýr sayýsý
+declare @un nvarchar(200) -- kullanıcı adı
+declare @id int -- gerçek verinin Id değeri
+declare @max int -- gerçek verinin satır sayısı
 
 select @max = COUNT(*) from Users
 
@@ -30,11 +30,11 @@ update #Names set [Surname] = TRIM([Surname])
 
 	DECLARE crs CURSOR FOR
 	
-	SELECT Id FROM Users -- Cursur de iþlenecek veriler ve listeyi select sorgusu ile çekiyoruz .
+	SELECT Id FROM Users -- Cursur de işlenecek veriler ve listeyi select sorgusu ile çekiyoruz .
 
-	OPEN crs -- Cursor ü açýyoruz
+	OPEN crs -- Cursor ü açıyoruz
 
-	FETCH NEXT FROM crs INTO @id -- Select sorgusunda gelen sütunlar sýrasýna göre deðiþkenlere atanýr Örn : @id = Id
+	FETCH NEXT FROM crs INTO @id -- Select sorgusunda gelen sütunlar sırasına göre değişkenlere atanıyor Örn : @id = Id
 
 	WHILE @@FETCH_STATUS =0
 		BEGIN
@@ -68,7 +68,7 @@ update #Names set [Surname] = TRIM([Surname])
 
 	CLOSE crs -- Cursor ü kapatýyoruz.
 
-	DEALLOCATE crs -- Cursor ile iþimiz bittiðinde sistemden tamizlememiz için DEALLOCATE etmemiz gerekmektedir.
+	DEALLOCATE crs -- Cursor ile işimiz bittiğinde sistemden tamizlememiz için DEALLOCATE etmemiz gerekmektedir.
 
 	update Users set Email = UserName + '@domain.com'
 
